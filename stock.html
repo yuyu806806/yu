@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>台股投資分析 - IFA</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="site-header small">
+    <a class="back-link" href="index.html">◀ 返回首頁</a>
+    <div class="title-text">台股投資分析</div>
+  </header>
+
+  <main class="container">
+    <section class="card-like">
+      <h2>你想做什麼：</h2>
+      <div class="analysis-toggle">
+        <button id="modeStock" class="toggle active">🔵 查看個別股票</button>
+        <button id="modeUndervalued" class="toggle">💎 找出好股票</button>
+      </div>
+
+      <!-- 查看個別股票模式 -->
+      <div id="stockMode" class="mode-section">
+        <div class="form-section">
+          <label>輸入股票代碼或名稱：
+            <input type="text" id="stockSearch" placeholder="例如：2330 或 台積電">
+            <button id="searchBtn" class="secondary">開始搜尋</button>
+          </label>
+        </div>
+
+        <div class="form-section">
+          <h3>熱門股票：</h3>
+          <div class="hot-stocks">
+            <span class="hot" data-code="2330">台積電 2330</span>
+            <span class="hot" data-code="2317">鴻海 2317</span>
+            <span class="hot" data-code="2454">聯發科 2454</span>
+            <span class="hot" data-code="2412">中華電 2412</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 找出好股票模式 -->
+      <div id="scanMode" class="mode-section hidden">
+        <div class="form-section">
+          <h3>設定篩選條件：</h3>
+          <label>公司市值大小：<input type="number" id="capMin" placeholder="最低"> ~ <input type="number" id="capMax" placeholder="最高"></label><br>
+          <label>產業類型：
+            <select id="industry">
+              <option>不限制</option>
+              <option>科技股</option>
+              <option>電子股</option>
+              <option>金融股</option>
+            </select>
+          </label><br>
+          <label>P/E 本益比：<input type="number" id="peMin" placeholder="最低"> ~ <input type="number" id="peMax" placeholder="最高"></label>
+        </div>
+
+        <div class="controls">
+          <button id="scanBtn" class="primary">🔍 用 AI 找出值得買的股票</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

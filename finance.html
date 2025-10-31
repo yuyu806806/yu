@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>財務報表分析</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- SheetJS 用於解析 Excel -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body>
+  <header class="site-header small">
+    <a class="back-link" href="index.html">◀ 返回首頁</a>
+    <div class="title-text">財務報表分析</div>
+  </header>
+
+  <main class="container">
+    <section class="card-like">
+      <h2>要如何輸入財務資料：</h2>
+      <label><input type="radio" name="inputType" value="manual" id="radioManual"> 手動輸入數字</label>
+      <label><input type="radio" name="inputType" value="upload" id="radioUpload" checked> 上傳 Excel 檔案</label>
+
+      <!-- 上傳區 -->
+      <div id="uploadArea" class="form-section" style="margin-top:12px;">
+        <label>選擇財務報表檔案（支援 .xlsx .xls .csv）：
+          <input type="file" id="excelFile" accept=".xlsx,.xls,.csv" />
+        </label>
+        <div class="controls" style="margin-top:8px;">
+          <button id="parseExcelBtn" class="primary">讀取檔案</button>
+        </div>
+        <p class="muted small">系統會自動識別並計算：營業收入、營業成本、營業利益、稅前純利、本期純利等關鍵数据。</p>
+      </div>
+
+      <!-- 手動區 -->
+      <div id="manualArea" class="form-section hidden" style="margin-top:12px;">
+        <h3>直接輸入財務数字（也可在上傳檔案後修改）</h3>
+        <label>營業收入：<input type="number" id="manualRevenue" placeholder="請輸入金額"></label><br>
+        <label>營業成本：<input type="number" id="manualCogs" placeholder="請輸入金額"></label><br>
+        <label>營業利益：<input type="number" id="manualOpIncome" placeholder="請輸入金額"></label><br>
+        <label>稅前純利：<input type="number" id="manualPreTax" placeholder="請輸入金額"></label><br>
+        <label>本期純利：<input type="number" id="manualNetIncome" placeholder="請輸入金額"></label><br>
+      </div>
+
+      <hr style="margin:12px 0; border:none; border-top:1px solid rgba(0,0,0,0.06)">
+
+      <!-- 自定義欄位（不會直接列入最終輸出，除非名稱含主關鍵字會合併） -->
+      <div class="form-section">
+        <h3>新增其他財務項目（名稱相同會自動合併）</h3>
+        <div style="margin-bottom:8px;">
+          <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px;">
+            <input type="text" id="newFieldName" placeholder="例如：研發費用" style="flex:1;">
+            <input type="number" id="newFieldValue" placeholder="輸入金額" style="flex:1;">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <input type="text" id="newFieldNote" placeholder="備註說明（選填）" style="flex:1;">
+            <button id="addCustomField" class="secondary">新增項目</button>
+          </div>
+        </div>
+        <div id="customFieldsList" style="margin-top:6px;"></div>
+      </div>
+
+      <div class="controls" style="margin-top:14px;">
+        <button id="computeBtn" class="primary">開始分析</button>
+        <button id="resetBtn" class="secondary">清除資料</button>
+      </div>
+
+      <div id="financeWarning" class="muted small" style="margin-top:8px;"></div>
+    </section>
+
+    <!-- 結果區（只顯示五個主要欄位與指標） -->
+    <section id="resultsSection" class="card-like hidden" style="margin-top:18px;">
+      <h3>財務数据結果</h3>
+
+      <table>
+        <thead><tr><th>項目</th><th>金額</th></tr></thead>
+        <tbody id="itemsTable"></tbody>
+      </table>
+
+      <h3 style="margin-top:12px;">關鍵指標</h3>
+      <table>
+        <thead><tr><th>指標</th><th>數值</th></tr></thead>
+        <tbody id="metricsTable"></tbody>
+      </table>
+
+      <div class="controls" style="margin-top:12px;">
+        <button id="downloadXlsx" class="primary">下載 Excel 報表</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
